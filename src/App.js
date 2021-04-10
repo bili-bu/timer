@@ -1,13 +1,9 @@
 import React from 'react';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>This is Lili</h1>
-      </header>
-    </div>
-  );
+  return <>
+    <h1>Clock</h1>
+  </>;
 }
 
 export default App;
