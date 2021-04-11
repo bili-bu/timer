@@ -1,0 +1,41 @@
+.timer {
+  background-color: darkblue;
+  margin: 40px 40px 0 40px;
+  height: 50vh;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .display {
+    color: white;
+    padding: 20px;
+    margin: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+
+    .units {
+      margin: 0 5px;
+      padding: 15px;
+      background-color: white;
+      border-radius: 5px;
+      color: darkblue;
+      font-weight: normal;
+    }
+  }
+
+  .controls {
+    display: flex;
+    flex-direction: row;
+
+    button {
+      padding: 10px;
+      margin: 10px;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      background-color: white;
+      color: darkblue;
+      border-radius: 5px;
+    }
+  }
+}

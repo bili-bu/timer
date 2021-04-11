@@ -1,8 +1,9 @@
 import React from 'react';
+import Timer from './Timer';
 
 function App() {
   return <>
-    <h1>Clock</h1>
+    <Timer />
   </>;
 }
 
