@@ -15,38 +15,33 @@ class Timer extends Component {
   timerInterval = 0
 
   playHandler = () => {
+    this.timerInterval = setInterval(this.runTimer, 10)
     this.runTimer()
     this.setState({ timerOn: true })
-    this.timerInterval = setInterval(this.runTimer, 10)
   }
 
   pauseHandler = () => {
-    this.setState({ timerOn: false })
     clearInterval(this.timerInterval)
+    this.setState({ timerOn: false })
   }
 
   resetHandler = () => {
-    this.setState({ 
-      timerOn: false,
-      h: 0,
-      m: 0,
-      s: 0,
-      ms: 0
-    })
+    clearInterval(this.timerInterval)
+    this.setState({ timerOn: false,h: 0, m: 0, s: 0, ms: 0})
   }
 
   runTimer = () => {
     let { h, m, s, ms } = this.state
     ms++
-    if (ms >= 100) {
+    if (ms === 100) {
       s++
       ms = 0
     }
-    if (s >= 60) {
+    if (s === 60) {
       m++
       s = 0
     }
-    if (m >= 60) {
+    if (m === 60) {
       h++
       m = 0
     }
@@ -54,7 +49,7 @@ class Timer extends Component {
   }
 
   render() {
-    const { h, m, s, ms } = this.state
+    const { timerOn, h, m, s, ms } = this.state
     return (
       <div className="timer">
         <div className="display">
@@ -64,8 +59,8 @@ class Timer extends Component {
           <span className="units">{(ms < 10)? "0" + ms : ms}</span>
         </div>
         <div className="controls">
-          <button onClick={this.playHandler}>Start</button>
-          <button onClick={this.pauseHandler}>Pause</button>
+          { timerOn === false && <button onClick={this.playHandler}>Start</button>}
+          { timerOn === true && <button onClick={this.pauseHandler}>Pause</button>}
           <button onClick={this.resetHandler}>Reset</button>
         </div>
       </div>
