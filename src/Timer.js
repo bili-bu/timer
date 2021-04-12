@@ -5,19 +5,24 @@ class Timer extends Component {
     super() 
     this.state = {
         timerOn: false,
-        h: 0,
-        m: 0,
-        s: 0,
-        ms: 0
+        time: 0,
+        start: 0
     }
   }
 
   timerInterval = 0
 
   playHandler = () => {
-    this.timerInterval = setInterval(this.runTimer, 10)
-    this.runTimer()
-    this.setState({ timerOn: true })
+    this.setState({ 
+      timerOn: true,
+      time: this.state.time,
+      start: Date.now() - this.state.time 
+    })
+    this.timerInterval = setInterval(() => {
+      this.setState({
+        time: Date.now() - this.state.start
+      })
+    }, 10)
   }
 
   pauseHandler = () => {
@@ -27,36 +32,27 @@ class Timer extends Component {
 
   resetHandler = () => {
     clearInterval(this.timerInterval)
-    this.setState({ timerOn: false,h: 0, m: 0, s: 0, ms: 0})
-  }
-
-  runTimer = () => {
-    let { h, m, s, ms } = this.state
-    ms++
-    if (ms === 100) {
-      s++
-      ms = 0
-    }
-    if (s === 60) {
-      m++
-      s = 0
-    }
-    if (m === 60) {
-      h++
-      m = 0
-    }
-    this.setState({ ms, s, m, h })
+    this.setState({ 
+      timerOn: false, 
+      time: 0, 
+      start: 0
+    })
   }
 
   render() {
-    const { timerOn, h, m, s, ms } = this.state
+    const { timerOn, time } = this.state
+    let ms = ("0" + (Math.floor(time / 10) % 100)).slice(-2);
+    let s = ("0" + (Math.floor(time / 1000) % 60)).slice(-2);
+    let m = ("0" + (Math.floor(time / 60000) % 60)).slice(-2);
+    let h = ("0" + Math.floor(time / 3600000)).slice(-2);
+
     return (
       <div className="timer">
         <div className="display">
-          <span className="units">{(h < 10)? "0" + h : h}</span>:  
-          <span className="units">{(m < 10)? "0" + m : m}</span>:
-          <span className="units">{(s < 10)? "0" + s : s}</span>:
-          <span className="units">{(ms < 10)? "0" + ms : ms}</span>
+          <span className="units">{ h }</span>:  
+          <span className="units">{ m }</span>:
+          <span className="units">{ s }</span>:
+          <span className="units">{ ms }</span>
         </div>
         <div className="controls">
           { timerOn === false && <button onClick={this.playHandler}>Start</button>}
